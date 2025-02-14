@@ -1,5 +1,5 @@
 import { Link, useFetcher } from 'react-router-dom'
-import { formatCorrency, formatDate, getAllMatchingItems } from '../utils/helpers'
+import { formatCurrency, formatDate, getAllMatchingItems } from '../utils/helpers'
 import { TrashIcon } from '@heroicons/react/24/solid'
 
 const ExpenseItem = ({ expense, showBudget }) => {
@@ -14,7 +14,7 @@ const ExpenseItem = ({ expense, showBudget }) => {
 	return (
 		<>
 			<td>{expense.name}</td>
-			<td>{formatCorrency(expense.amount)}</td>
+			<td>{formatCurrency(expense.amount)}</td>
 			<td>{formatDate(expense.createdAt)}</td>
 			{showBudget && (
 				<td>
@@ -22,11 +22,7 @@ const ExpenseItem = ({ expense, showBudget }) => {
 							to={`/budgets/${budget?.id}`} 
 							style={{ '--accent': budget?.color }}
 						>
-							{budget?.name.split(' ').length > 1 ? 
-								`${budget?.name.split(' ')[0][0]}. ${budget?.name.split(' ').pop()}` 
-							: 
-								budget?.name
-							}
+							{budget.name.split(' ').pop()}
 						</Link>
 				</td>
 			)}

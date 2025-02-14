@@ -89,9 +89,32 @@ export const formatPercentage = (amount) => {
 }
 
 // Format Currency
-export const formatCorrency = (amount) => {
-	return amount.toLocaleString(undefined, {
-		style: 'currency',
-		currency: 'NGN'
-	})
+export const formatCurrency = (amount) => {
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const currency = getCurrencyFromTimeZone(timeZone)
+
+  return new Intl.NumberFormat(undefined, {
+    style: 'currency',
+    currency: currency
+  }).format(amount);
+};
+
+// Helper function to map timezones to currency
+const getCurrencyFromTimeZone = (timeZone) => {
+  const currencyMap = {
+    'Africa/Lagos': 'NGN', // Nigeria
+    'Africa/Accra': 'GHS', // Ghana
+    'Africa/Cairo': 'EGP', // Egypt
+    'America/New_York': 'USD', // USA
+    'America/Toronto': 'CAD', // Canada
+    'Europe/London': 'GBP', // UK
+    'Europe/Paris': 'EUR', // France
+    'Europe/Berlin': 'EUR', // Germany
+    'Asia/Tokyo': 'JPY', // Japan
+    'Asia/Dubai': 'AED', // UAE
+    'Asia/Kolkata': 'INR', // India
+    'Australia/Sydney': 'AUD', // Australia
+  }
+
+  return currencyMap[timeZone] || 'USD' // Default to USD if timezone not found
 }
